@@ -11,7 +11,7 @@ namespace Algebra
 	{
 		std::random_device device_;
 		std::mt19937 engine_ = { std::mt19937(device_()) };
-		std::uniform_int_distribution<int> dist = { std::uniform_int_distribution<int>(0, 1) };
+		std::uniform_int_distribution<int> dist = { std::uniform_int_distribution<int>(0, Zp-1) };
 		std::vector<int> ivec = { std::vector<int>(PolynomialDegree + 1) };
 	public:
 		RandomPolynomialGenerator()

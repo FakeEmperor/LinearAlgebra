@@ -1,3 +1,7 @@
+#define _EXAMPLES_ACTIVE 0
+
+#if defined(_EXAMPLES_ACTIVE) && _EXAMPLES_ACTIVE == 1
+
 #include <iostream>
 #include <vector>
 
@@ -10,7 +14,24 @@
 
 using namespace Algebra;
 
+
+void check_k()
+{
+	// x^2 + x + 1 
+	Polynomial<2> x_sq = { 1, 1, 1 };
+	x_sq = x_sq.pow(2);
+	std::vector<Polynomial<2>> remainders;
+	std::vector<Polynomial<2>> k;
+	//for (auto rem : remainders)
+	//{
+	//	
+	//}
+	
+	//for 
+}
+
 int main() {
+	/*
 	Polynomial<5> p1 = { 2, 1, 2, -1, -1, -1, -2, -3, -4, 1, 1, 2, 3, 4, 8 };
 	Polynomial<5> p2 = { 4, 3 };
 	const size_t pw = 100;
@@ -50,7 +71,7 @@ int main() {
 	std::cout << pa << " * X = " << 1 << " mod " << pb << ". X = " << exp_g << std::endl;
 	std::cout << "Really? " << pa << " * " << exp_g << " = " << (pa * exp_g) % pb << " mod " << pb << std::endl;
 
-	constexpr const size_t Zp = 2, degree = 8;
+	constexpr const size_t Zp = 2, degree = 4;
 	ConsecutivePolynomialGenerator<Zp, degree> gen;
 	auto all_irrs = GaloisFieldExtension<Zp, degree>::FindAllIrreducibles(gen);
 	gen.reset();
@@ -58,13 +79,13 @@ int main() {
 	std::cout << "All irreducibles over Z" << Zp << " with degree " << degree << "(" << all_irrs.size() << ") : " << std::endl;
 	for (auto ir : all_irrs)
 		std::cout << ir << std::endl;
-	// Build F(2^6 = 64)
+	// Build F(2^4 = 16)
 	ConsecutivePolynomialGenerator<Zp, degree> generator;
 	GaloisFieldExtension<Zp, degree> gf = GaloisFieldExtension<Zp, degree>::Build(generator);
 	gf.PrintPretty(std::cout);
 
 	// FactorizeByFieldElements something
-	Polynomial<2> to_factor = { 0, 0, 1, 0, 1, 0, 1, 1, 1,1, 0 , 1 }; // x^4 + x^2 + x + 1
+	Polynomial<2> to_factor = { 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0 , 1 }; // x^4 + x^2 + x + 1
 	auto factorized_poly = gf.FactorizeByFieldElements(to_factor);
 	std::cout << "Factorization of " << to_factor << " over F(" << Zp << "^" << degree << ")" << " = ";
 	bool printed = false;
@@ -76,11 +97,14 @@ int main() {
 		if (factor.second != 1)
 			std::cout << "^" << factor.second;
 		printed = true;
-	}
+	}*/
+	RandomPolynomialGenerator<2, 9> generator;
+	auto field = GaloisFieldExtension<2, 9>::Build(generator);
+	field.PrintPretty(std::cout, false);
+
+
 	std::cout << std::endl;
-	RandomPolynomialGenerator<Zp, degree> rgen;
-	std::cout << "RANDOM Irreducible over Z" << Zp << " with degree " << degree << " : " << GaloisFieldExtension<Zp, degree>::FindIrreducible(rgen) << std::endl;
-
-
 	return 0;
 };
+
+#endif

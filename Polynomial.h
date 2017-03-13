@@ -24,17 +24,20 @@ namespace Algebra
 
 	template <size_t Zp>
 	// FROM LEFT TO RIGHT: 0 0 1 - x^2
-	class Polynomial {\
+	class Polynomial {
 		static_assert(Zp > 1, "Zp cannot be less than 2");
 
 		typedef std::vector<int> vec;
 
-		vec powers;
+		vec powers_;
+
+		size_t deg_cache_;
 	protected:
 		// used inside pow() - just dumb * cycle
 		Polynomial		rpow			(size_t num)				const;
 		// use this to construct without normalization (modulus check)
 		Polynomial						(const vec& powers, bool normalization);
+		size_t			compute_deg		()							const;
 
 	public:
 		static OUTPUT_MODE							OutputMode;
@@ -46,6 +49,7 @@ namespace Algebra
 
 		Polynomial						(const std::initializer_list<int>& l);
 		Polynomial						(const vec& powers);
+		Polynomial						(const int constant);
 
 		//// CONTROL FUNCTIONS AND OPERATORS
 
@@ -155,12 +159,14 @@ namespace Algebra
 	template <size_t Zp>
 	DIVISION_CORRUPTION_POLICY Polynomial<Zp>::DivisionPolicy = DIVISION_CORRUPTION_POLICY::THROW;
 
+	
 	template <size_t Zp>
-	const Polynomial<Zp> Polynomial<Zp>::One	=	{ 1 };
+	const Polynomial<Zp> Polynomial<Zp>::One	=	1;
 	template <size_t Zp>
-	const Polynomial<Zp> Polynomial<Zp>::Zero	=	{ 0 };
+	const Polynomial<Zp> Polynomial<Zp>::Zero	=	0;
 	template <size_t Zp>
 	const Polynomial<Zp> Polynomial<Zp>::X		=	{ 0, 1 };
+	
 
 	/////////////// IMPLEMENTATION
 
@@ -184,40 +190,53 @@ namespace Algebra
 
 	template <size_t Zp>
 	Polynomial<Zp>::Polynomial(const vec& powers, bool normalization) :
-		powers(normalization ? normalize(powers, Zp) : powers)
+		powers_(normalization ? normalize(powers, Zp) : powers), deg_cache_(compute_deg())
 	{
 	}
 
-
-
+	template <size_t Zp>
+	size_t Polynomial<Zp>::compute_deg() const
+	{
+		for (size_t i = powers_.size() - 1; i != -1; --i)
+		{
+			if (powers_[i])
+				return i;
+		}
+		return 0;
+	}
 
 
 	template <size_t Zp>
-	Polynomial<Zp>::Polynomial(const std::initializer_list<int>& l) : powers(normalize(l, Zp))
+	Polynomial<Zp>::Polynomial(const std::initializer_list<int>& l) : powers_(normalize(l, Zp)), deg_cache_(compute_deg())
 	{
 	}
 
 	template <size_t Zp>
 	Polynomial<Zp>::Polynomial(const vec& powers) :
-		powers(normalize(powers, Zp))
+		Polynomial(powers, true)
 	{
 	}
 
+	template <size_t Zp>
+	Polynomial<Zp>::Polynomial(const int constant):
+		powers_({mod(constant, Zp)}), deg_cache_(compute_deg())
+	{
 
-
+	}
 
 
 	template <size_t Zp>
 	int Polynomial<Zp>::operator[](size_t idx) const
 	{
-		return powers[idx];
+		// TODO: allocate memory gracefully
+		return powers_[idx];
 	}
 
 
 	template <size_t Zp>
 	size_t Polynomial<Zp>::size() const
 	{
-		return powers.size();
+		return powers_.size();
 	}
 
 	template <size_t Zp>
@@ -243,7 +262,7 @@ namespace Algebra
 	Polynomial<Zp>& Polynomial<Zp>::operator+=(const Polynomial& p)
 	{
 		size_t maxs = std::max(p.size(), this->size());
-		const vec &minv = maxs == p.size() ? powers : p.powers, &maxv = maxs == p.size() ? p.powers : powers;
+		const vec &minv = maxs == p.size() ? powers_ : p.powers_, &maxv = maxs == p.size() ? p.powers_ : powers_;
 		size_t mins = minv.size();
 		vec resv(maxs);
 		for (size_t i = 0; i < maxs; ++i)
@@ -253,7 +272,7 @@ namespace Algebra
 			else
 				resv[i] = maxv[i];
 		}
-		this->powers = resv;
+		this->powers_ = resv;
 		return *this;
 	}
 
@@ -313,7 +332,7 @@ namespace Algebra
 		Polynomial res = *this;
 		if (number == 1)
 			return res;
-		for (auto& p : res.powers)
+		for (auto& p : res.powers_)
 		{
 			p = mod((p * number), Zp);
 		}
@@ -384,13 +403,13 @@ namespace Algebra
 	template <size_t Zp>
 	void Polynomial<Zp>::assign(const std::vector<int>& p)
 	{
-		powers = normalize(p, Zp);
+		powers_ = normalize(p, Zp);
 	}
 
 	template <size_t Zp>
 	void Polynomial<Zp>::set(size_t idx, int value)
 	{
-		powers[idx] = mod(value, Zp);
+		powers_[idx] = mod(value, Zp);
 	}
 
 	template <size_t Zp>
@@ -398,9 +417,9 @@ namespace Algebra
 	{
 		x_value = mod(x_value, Zp);
 		size_t res = 0;
-		for (size_t i = 0, sz = powers.size(); i < sz; ++i)
+		for (size_t i = 0, sz = powers_.size(); i < sz; ++i)
 		{
-			auto p = powers[i];
+			auto p = powers_[i];
 			if (p)
 				res = mod(res + powmod(x_value, i, Zp) * p, Zp);
 		}
@@ -410,12 +429,7 @@ namespace Algebra
 	template <size_t Zp>
 	size_t Polynomial<Zp>::deg() const
 	{
-		for (size_t i = powers.size() - 1; i != -1; --i)
-		{
-			if (powers[i])
-				return i;
-		}
-		return 0;
+		return compute_deg();
 	}
 
 	template <size_t Zp>
@@ -454,11 +468,14 @@ namespace Algebra
 			{
 				if (DivisionPolicy == DIVISION_CORRUPTION_POLICY::THROW)
 					throw std::runtime_error("Cannot find the coefficients wich will suffice the equation");
-				// try to find a solution
-				coefficient = remainder[dt] / coefficient;
-				if (!coefficient)
-					coefficient = 1;
-				end = true;
+				else
+				{
+					// try to find a solution
+					coefficient = remainder[dt] / coefficient;
+					if (!coefficient)
+						coefficient = 1;
+					end = true;
+				}
 			}
 			quotient.set(shift_value, coefficient);
 			remainder -= (p * coefficient).shift(shift_value);

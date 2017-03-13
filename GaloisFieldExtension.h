@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <random>
 #include <iomanip>
 #include <cmath>
 
@@ -16,10 +17,12 @@ namespace Algebra
 	// GF(Zp^Deg)
 	class GaloisFieldExtension
 	{
-
-		Polynomial<Zp> factor_;
-		Polynomial<Zp> generator_;
-		std::vector<Polynomial<Zp>> elements_ = { Polynomial<Zp>::One };
+	public:
+		typedef Polynomial<Zp> Poly;
+	private:
+		Poly factor_;
+		Poly generator_;
+		std::vector<Poly> elements_ = { Poly::One };
 
 		static_assert(Deg > 0, "Degree should be greater than zero to build non-trivial field");
 	protected:
@@ -28,14 +31,15 @@ namespace Algebra
 
 		GaloisFieldExtension() = delete;
 
-		GaloisFieldExtension(const Polynomial<Zp>& factor, const Polynomial<Zp>& generator);
+		GaloisFieldExtension(const Poly& factor, const Poly& primitive);
 
-		static GaloisFieldExtension BuildFactorGroup(const Polynomial<Zp>& factor);
+		static GaloisFieldExtension BuildMultGroup(const Poly& factor, const Poly &primitive);
 	public:
-		static Polynomial<Zp> DefaultGenerator;
+		static Poly DefaultPrimitive;
+		
 
 		// Most stupid test ever
-		static bool RabinTest(const Polynomial<Zp>& poly);
+		static bool RabinTest(const Poly& poly);
 
 		// Field's order
 		size_t order() const;
@@ -44,25 +48,43 @@ namespace Algebra
 		size_t m_order() const;
 
 		// get element by its order
-		Polynomial<Zp> operator[](size_t order) const;
+		Poly operator[](size_t order) const;
 
 		// find log_generator(poly mod factor)
-		size_t log_alpha(const Polynomial<Zp>& poly) const;
+		size_t log_alpha(const Poly& poly) const;
 
 		std::vector<size_t> GetAdjointElements(size_t elem_index) const;
 
-		Polynomial<Zp> FindMinimalPolynomial(size_t elem_index) const;
+		Poly FindMinimalPolynomial(size_t elem_index) const;
 
 		std::vector<size_t> FindAllPrimitiveElements(size_t order = powl(Zp, Deg)) const;
 
 		// Tests primitivity over finite field in subfield or field itself
 		static bool TestPrimitivity(size_t elem_order, size_t order = powl(Zp, Deg));
 
-		static bool TestIrreducibility(const Polynomial<Zp>& poly);
+		static bool TestPrimitivity(const Poly &poly, const Poly &modulus);
 
-		static Polynomial<Zp> FindIrreducible(PolynomialGenerator<Zp, Deg> &generator)
+		static bool TestIrreducibility(const Poly& poly);
+
+		static Poly FindPrimitive(PolynomialGenerator<Zp, Deg> &generator, Poly factor)
 		{
-			Polynomial<Zp> poly = Polynomial<Zp>::Zero;
+			auto primitive = GaloisFieldExtension::DefaultPrimitive;
+			if (!TestPrimitivity(primitive, factor))
+			{
+				generator.reset();
+				do
+				{
+					primitive = generator();
+					primitive.set(Deg, 0);
+				} while (!TestPrimitivity(primitive, factor));
+				
+			}
+			return primitive;
+		}
+
+		static Poly FindIrreducible(PolynomialGenerator<Zp, Deg> &generator)
+		{
+			Poly poly = Poly::Zero;
 			std::vector<int> vec(Deg + 1);
 			vec[Deg] = 1;
 			// every 1-degree Polynomial is irreducible
@@ -72,13 +94,13 @@ namespace Algebra
 				std::mt19937 mt(rd());
 
 				vec[0] = randmod([&mt]() { return mt(); }, Zp);
-				return Polynomial<Zp>(vec);
+				return Poly(vec);
 			}
 
 			auto end_deterministic = generator.end_supported();
 			while (!generator.end() || !end_deterministic)
 			{
-				Polynomial<Zp> candidate = generator();
+				Poly candidate = generator();
 				if (TestIrreducibility(candidate))
 					return candidate;
 			}
@@ -89,18 +111,18 @@ namespace Algebra
 		// factorizes in field Zp^Deg
 		// first - irreducible polynomial, second - its arity
 		// Berlekamp's algorithm
-		std::vector<std::pair<Polynomial<Zp>, size_t>> FactorizeByFieldElements(const Polynomial<Zp>& poly) const;
+		std::vector<std::pair<Poly, size_t>> FactorizeByFieldElements(const Poly& poly) const;
 
 
-		static std::vector<Polynomial<Zp>> FindAllIrreducibles(PolynomialGenerator<Zp, Deg> &generator) noexcept(false)
+		static std::vector<Poly> FindAllIrreducibles(PolynomialGenerator<Zp, Deg> &generator) noexcept(false)
 		{
-			std::vector<Polynomial<Zp>> res;
+			std::vector<Poly> res;
 			auto end_deterministic = generator.end_supported();
 			if (!end_deterministic)
 				throw std::runtime_error("Could not generate all irreducible polynomials with non-deterministic generator.");
 			while (!generator.end())
 			{
-				Polynomial<Zp> candidate = generator();
+				Poly candidate = generator();
 				if (TestIrreducibility(candidate))
 					res.push_back(candidate);
 			}
@@ -110,45 +132,45 @@ namespace Algebra
 
 		static GaloisFieldExtension Build(PolynomialGenerator<Zp, Deg> &generator)
 		{
-			return BuildFactorGroup(FindIrreducible(generator));
+			auto gen = FindIrreducible(generator);
+			return BuildMultGroup(gen, FindPrimitive(generator, gen ));
 		}
 
-		static GaloisFieldExtension Build(const Polynomial<Zp>& factor, bool test_irreducibilty = true);
+		static GaloisFieldExtension Build(const Poly& factor, const Poly& generator=GaloisFieldExtension::DefaultPrimitive, bool test_irreducibilty = true, bool test_primitivity = true);
 
 		void PrintPretty(std::ostream& s, bool print_elements = true) const;
 	};
 
 	template<size_t Zp, size_t Deg>
-	Polynomial<Zp> GaloisFieldExtension<Zp, Deg>::DefaultGenerator = Polynomial<Zp>::X;
+	Polynomial<Zp> GaloisFieldExtension<Zp, Deg>::DefaultPrimitive = { 0, 1 };
 
 
 
 	// IMPLEMENTATION
 
 	template <size_t Zp, size_t Deg>
-	GaloisFieldExtension<Zp, Deg>::GaloisFieldExtension(const Polynomial<Zp>& factor, const Polynomial<Zp>& generator): factor_(factor), generator_(generator)
+	GaloisFieldExtension<Zp, Deg>::GaloisFieldExtension(const Poly& factor, const Poly& generator): factor_(factor), generator_(generator)
 	{
 	}
 
 	template <size_t Zp, size_t Deg>
-	GaloisFieldExtension<Zp, Deg> GaloisFieldExtension<Zp, Deg>::BuildFactorGroup(const Polynomial<Zp>& factor)
+	GaloisFieldExtension<Zp, Deg> GaloisFieldExtension<Zp, Deg>::BuildMultGroup(const Poly& factor, const Poly &primitive)
 	{
-		auto generator = GaloisFieldExtension::DefaultGenerator;
-		GaloisFieldExtension f(factor, generator);
+		GaloisFieldExtension f(factor, primitive);		
 		size_t i = 0;
-		auto poly = Polynomial<Zp>::One;
+		auto poly = Poly::One;
 		do
 		{
-			poly = (generator * f.elements_[i++]) % f.factor_;
-			if (poly.deg() != 0)
+			poly = (primitive * f.elements_[i++]) % f.factor_;
+			if (poly != Poly::One)
 				f.elements_.push_back(poly);
 		}
-		while (poly.deg() != 0);
+		while (poly != Poly::One);
 		return f;
 	}
 
 	template <size_t Zp, size_t Deg>
-	bool GaloisFieldExtension<Zp, Deg>::RabinTest(const Polynomial<Zp>& poly)
+	bool GaloisFieldExtension<Zp, Deg>::RabinTest(const Poly& poly)
 	{
 		auto deg = poly.deg();
 		Factorizer factorize;
@@ -156,10 +178,10 @@ namespace Algebra
 		for (const auto& divisor : divisors)
 		{
 			auto nj = deg / divisor.first;
-			if (Polynomial<Zp>::Gcd(poly, Polynomial<Zp>::SpecialPolyMod(nj, poly)) != Polynomial<Zp>::One)
+			if (Poly::Gcd(poly, Poly::SpecialPolyMod(nj, poly)) != Poly::One)
 				return false;
 		}
-		return Polynomial<Zp>::SpecialPolyMod(deg, poly) == Polynomial<Zp>::Zero;
+		return Poly::SpecialPolyMod(deg, poly) == Poly::Zero;
 	}
 
 	template <size_t Zp, size_t Deg>
@@ -181,7 +203,7 @@ namespace Algebra
 	}
 
 	template <size_t Zp, size_t Deg>
-	size_t GaloisFieldExtension<Zp, Deg>::log_alpha(const Polynomial<Zp>& poly) const
+	size_t GaloisFieldExtension<Zp, Deg>::log_alpha(const Poly& poly) const
 	{
 		auto remainder = poly % factor_;
 		for (size_t i = 0, sz = elements_.size(); i < sz; ++i)
@@ -211,10 +233,10 @@ namespace Algebra
 	Polynomial<Zp> GaloisFieldExtension<Zp, Deg>::FindMinimalPolynomial(size_t elem_index) const
 	{
 		auto adjoints = GetAdjointElements(elem_index);
-		auto poly = Polynomial<Zp>::X - elements_[elem_index];
+		auto poly = Poly::X - elements_[elem_index];
 		for (auto adjoint : adjoints)
 		{
-			poly *= Polynomial<Zp>::X - elements_[adjoint];
+			poly *= Poly::X - elements_[adjoint];
 		}
 		return poly;
 	}
@@ -252,17 +274,36 @@ namespace Algebra
 		for (auto factor : factors)
 		{
 			size_t p_i = mult_order / factor.first;
-			if (powmod(elem_order, p_i, order) != 1)
+			if (powmod(elem_order, p_i, order) == 1)
 				return false;
 		}
 		return true;
 	}
 
 	template <size_t Zp, size_t Deg>
-	bool GaloisFieldExtension<Zp, Deg>::TestIrreducibility(const Polynomial<Zp>& poly)
+	bool GaloisFieldExtension<Zp, Deg>::TestPrimitivity(const Poly &poly, const Poly &modulus)
+	{
+		if (poly == 0)
+			return false;
+		if (poly.deg() >= modulus.deg())
+			throw std::runtime_error("Generator cannot have degree more than factor's");
+		Factorizer frizer;
+		size_t mult_order = powl(Zp, Deg) - 1;
+		auto factors = frizer(mult_order);
+		for(auto factor : factors)
+		{	
+			auto p_i = mult_order / factor.first;
+			if (poly.pow(p_i) % modulus == Poly::One)
+				return false;
+		}
+		return true;
+	}
+
+	template <size_t Zp, size_t Deg>
+	bool GaloisFieldExtension<Zp, Deg>::TestIrreducibility(const Poly& poly)
 	{
 		auto deg = poly.deg();
-		if (deg <= 1)
+		if (deg == 1)
 			return true;
 		for (size_t x = 0; x < Zp; ++x)
 			if (!poly.eval(x))
@@ -278,24 +319,25 @@ namespace Algebra
 	}
 
 	template <size_t Zp, size_t Deg>
-	std::vector<std::pair<Polynomial<Zp>, size_t>> GaloisFieldExtension<Zp, Deg>::FactorizeByFieldElements(const Polynomial<Zp>& poly) const
+	std::vector<std::pair<Polynomial<Zp>, size_t>> GaloisFieldExtension<Zp, Deg>::FactorizeByFieldElements(const Poly& poly) const
 	{
-		std::vector<std::pair<Polynomial<Zp>, size_t>> factors;
+		std::vector<std::pair<Poly, size_t>> factors;
 		// check simple roots
 		// TODO: Make it real Berlekamp's algorithm instead of this fucking dumb cycle
 		auto cur_poly = poly;
 		size_t cdeg = cur_poly.deg();
-		for (size_t i = 0, sz = order(); i < sz; ++i)
+		// cdeg is 0 (constant) => fully factorized
+		for (size_t i = 0, sz = order(); i < sz && cdeg != 0; ++i)
 		{
-			auto elem = i ? elements_[i - 1] : Polynomial<Zp>::Zero;
-			if (cdeg >= elem.deg() && elem != Polynomial<Zp>::X)
+			auto elem = i ? elements_[i - 1] : Poly::Zero;
+			if (cdeg >= elem.deg() && elem != Poly::X)
 			{
-				auto root = Polynomial<Zp>::X - elem;
-				if (root != Polynomial<Zp>::One)
+				auto root = Poly::X - elem;
+				if (root != Poly::One)
 				{
 					auto div_res = cur_poly.divide(root);
 					size_t arity = 0;
-					while (div_res.second == Polynomial<Zp>::Zero)
+					while (div_res.second == Poly::Zero)
 					{
 						++arity;
 						cur_poly = div_res.first;
@@ -306,9 +348,6 @@ namespace Algebra
 						factors.push_back(std::make_pair(root, arity));
 				}
 			}
-			// factorized successfully
-			if (cdeg == 0)
-				break;
 		}
 		if (cdeg != 0)
 			factors.push_back(std::make_pair(cur_poly, 1));
@@ -316,11 +355,15 @@ namespace Algebra
 	}
 
 	template <size_t Zp, size_t Deg>
-	GaloisFieldExtension<Zp, Deg> GaloisFieldExtension<Zp, Deg>::Build(const Polynomial<Zp>& factor, bool test_irreducibilty)
+	GaloisFieldExtension<Zp, Deg> GaloisFieldExtension<Zp, Deg>::Build(const Poly& factor, const Poly& generator, bool test_irreducibilty, bool test_primitivity)
 	{
-		if (test_irreducibilty && TestIrreducibility(factor))
+		if (factor.deg() < Deg)
+			throw std::runtime_error("Given polynomial has lesser degree than degree of the field");
+		if (test_irreducibilty && !TestIrreducibility(factor))
 			throw std::runtime_error("Given polynomial is reducible");
-		return BuildFactorGroup(factor);
+		if (!TestPrimitivity(generator, factor))
+			throw std::runtime_error("Give generator is non-primitive");
+		return BuildMultGroup(factor, generator);
 	}
 
 	template <size_t Zp, size_t Deg>
