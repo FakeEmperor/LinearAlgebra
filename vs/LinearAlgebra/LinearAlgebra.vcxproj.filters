@@ -21,40 +21,49 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\examples.cc">
+    <ClCompile Include="algebra\Algebra.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Algebra.cc">
-      <Filter>Source Files\Algebra</Filter>
+    <ClCompile Include="algebra\examples.cc">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Factorizer.cc">
-      <Filter>Source Files\Algebra</Filter>
+    <ClCompile Include="algebra\Factorizer.cc">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Polynomial.cc">
-      <Filter>Source Files\Algebra</Filter>
+    <ClCompile Include="algebra\Polynomial.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\test_algebra.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\test_main.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Algebra.h">
-      <Filter>Header Files\Algebra</Filter>
+    <ClInclude Include="algebra\Algebra.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ConsecutivePolynomialGenerator.h">
-      <Filter>Header Files\Algebra</Filter>
+    <ClInclude Include="algebra\ConsecutivePolynomialGenerator.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Factorizer.h">
-      <Filter>Header Files\Algebra</Filter>
+    <ClInclude Include="algebra\Factorizer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\GaloisFieldExtension.h">
-      <Filter>Header Files\Algebra</Filter>
+    <ClInclude Include="algebra\GaloisFieldExtension.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Polynomial.h">
-      <Filter>Header Files\Algebra</Filter>
+    <ClInclude Include="algebra\Polynomial.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\PolynomialGenerator.h">
-      <Filter>Header Files\Algebra</Filter>
+    <ClInclude Include="algebra\PolynomialGenerator.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\RandomPolynomialGenerator.h">
-      <Filter>Header Files\Algebra</Filter>
+    <ClInclude Include="algebra\RandomPolynomialGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\catch.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

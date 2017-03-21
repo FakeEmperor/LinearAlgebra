@@ -18,9 +18,31 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="algebra\Algebra.h" />
+    <ClInclude Include="algebra\ConsecutivePolynomialGenerator.h" />
+    <ClInclude Include="algebra\Factorizer.h" />
+    <ClInclude Include="algebra\GaloisFieldExtension.h" />
+    <ClInclude Include="algebra\Polynomial.h" />
+    <ClInclude Include="algebra\PolynomialGenerator.h" />
+    <ClInclude Include="algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="codes\core\IBlockCode.h" />
+    <ClInclude Include="codes\core\ICode.h" />
+    <ClInclude Include="codes\core\ICodeData.h" />
+    <ClInclude Include="codes\core\ICyclicCode.h" />
+    <ClInclude Include="codes\core\ILinearCode.h" />
+    <ClInclude Include="codes\impl\ReedMuller.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="algebra\Algebra.cc" />
+    <ClCompile Include="algebra\examples.cc" />
+    <ClCompile Include="algebra\Factorizer.cc" />
+    <ClCompile Include="algebra\Polynomial.cc" />
+    <ClCompile Include="codes\example.cc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{EB4FC7FA-8A98-4276-A161-2556D7E6A5AF}</ProjectGuid>
-    <RootNamespace>LinearAlgebra</RootNamespace>
+    <ProjectGuid>{F157EC3E-242E-4814-BD05-A1B4FD2B688E}</ProjectGuid>
+    <RootNamespace>CyclicCodes</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -68,13 +90,21 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -82,6 +112,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -91,6 +122,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -110,24 +142,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\Algebra.cc" />
-    <ClCompile Include="..\..\examples.cc" />
-    <ClCompile Include="..\..\Factorizer.cc" />
-    <ClCompile Include="..\..\Polynomial.cc" />
-    <ClCompile Include="Tests\test_algebra.cpp" />
-    <ClCompile Include="Tests\test_main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Algebra.h" />
-    <ClInclude Include="..\..\ConsecutivePolynomialGenerator.h" />
-    <ClInclude Include="..\..\Factorizer.h" />
-    <ClInclude Include="..\..\GaloisFieldExtension.h" />
-    <ClInclude Include="..\..\Polynomial.h" />
-    <ClInclude Include="..\..\PolynomialGenerator.h" />
-    <ClInclude Include="..\..\RandomPolynomialGenerator.h" />
-    <ClInclude Include="Tests\catch.hpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
