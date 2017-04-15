@@ -183,7 +183,6 @@ namespace algebra
 	/////////////// IMPLEMENTATION
 
 
-
 	template <size_t Zp>
 	Polynomial<Zp> Polynomial<Zp>::rpow(size_t num) const
 	{
@@ -250,6 +249,9 @@ namespace algebra
 		powers_({mod(constant, Zp)}), deg_cache_(compute_deg())
 	{ }
 
+
+
+    //////////////////////// ACCESS METHODS ////////////////////////
 
 
 	template <size_t Zp>
@@ -444,6 +446,9 @@ namespace algebra
         *this = *this / p;
         return *this;
     }
+
+    //////////////////////// LOGICAL OPERATORS  ////////////////////////////
+
 	template <size_t Zp>
 	bool Polynomial<Zp>::operator==(const Polynomial& p) const
 	{
@@ -481,6 +486,7 @@ namespace algebra
         return !((*this) < p);
     }
 
+    //////////////////////   CONTROLS  ////////////////////////
 
 	template <size_t Zp>
 	Polynomial<Zp> Polynomial<Zp>::shift(size_t shift) const
