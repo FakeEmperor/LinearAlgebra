@@ -1,7 +1,7 @@
 #pragma once
 #include "Polynomial.h"
 
-namespace Algebra
+namespace algebra
 {
 	template <size_t Zp, size_t PolynomialDegree>
 	class PolynomialGenerator

@@ -19,8 +19,8 @@ namespace algebra
 
             virtual ~ICyclicCode() = default;
 
-			virtual const Algebra::Polynomial<Q>* getGenerator() const = 0;
-			virtual const Algebra::Polynomial<Q>* getChecking() const = 0;
+			virtual const algebra::Polynomial<Q>* getGenerator() const = 0;
+			virtual const algebra::Polynomial<Q>* getChecking() const = 0;
 
             virtual size_t blockSize() const override { return BLOCK_SIZE; };
 

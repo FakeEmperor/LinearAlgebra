@@ -10,7 +10,7 @@
 #include "Factorizer.h"
 
 
-namespace Algebra
+namespace algebra
 {
 
 

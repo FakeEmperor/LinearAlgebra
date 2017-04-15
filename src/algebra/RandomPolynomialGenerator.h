@@ -3,7 +3,7 @@
 #include <random>
 #include <algorithm>
 
-namespace Algebra
+namespace algebra
 {
 	
 	template <size_t Zp, size_t PolynomialDegree>
@@ -14,6 +14,7 @@ namespace Algebra
 		std::uniform_int_distribution<int> dist = { std::uniform_int_distribution<int>(0, Zp-1) };
 		std::vector<int> ivec = { std::vector<int>(PolynomialDegree + 1) };
 	public:
+		RandomPolynomialGenerator( const PolynomialGenerator<Zp, PolynomialDegree>& copy) = delete;
 		RandomPolynomialGenerator()
 		{
 			ivec[PolynomialDegree] = 1;

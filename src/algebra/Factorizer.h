@@ -3,7 +3,7 @@
 #include <ostream>
 
 
-namespace Algebra
+namespace algebra
 {
 	class Factorizer
 	{

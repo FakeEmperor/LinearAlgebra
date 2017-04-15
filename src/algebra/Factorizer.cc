@@ -1,9 +1,9 @@
 #include <cmath>
 #include "Factorizer.h"
 
-const std::vector<size_t> Algebra::Factorizer::CorePrimes = { 2 };
+const std::vector<size_t> algebra::Factorizer::CorePrimes = { 2 };
 
-bool Algebra::Factorizer::PrimeCheck_(size_t candidate)
+bool algebra::Factorizer::PrimeCheck_(size_t candidate)
 {
 	size_t candidate_root = ::sqrtl(candidate) + 1;
 	size_t prime = 0;
@@ -15,7 +15,7 @@ bool Algebra::Factorizer::PrimeCheck_(size_t candidate)
 	return true;
 }
 
-std::vector<std::pair<size_t, size_t>> Algebra::Factorizer::operator()(size_t number)
+std::vector<std::pair<size_t, size_t>> algebra::Factorizer::operator()(size_t number)
 {
 	if (number == 0)
 		return {{0, 0}};
@@ -40,7 +40,7 @@ std::vector<std::pair<size_t, size_t>> Algebra::Factorizer::operator()(size_t nu
 	return factorized;
 }
 
-void Algebra::Factorizer::CalculatePrimesTo(size_t max_possible_prime)
+void algebra::Factorizer::CalculatePrimesTo(size_t max_possible_prime)
 {
 	for (size_t sz = Primes.size(), curnumber = Primes[sz - 1] + 1; curnumber <= max_possible_prime; ++curnumber)
 	{
@@ -49,7 +49,7 @@ void Algebra::Factorizer::CalculatePrimesTo(size_t max_possible_prime)
 	}
 }
 
-void Algebra::Factorizer::FlushPrimes()
+void algebra::Factorizer::FlushPrimes()
 {
 	Primes = CorePrimes;
 }
