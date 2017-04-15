@@ -621,7 +621,7 @@ namespace algebra
 	Polynomial<Zp> Polynomial<Zp>::SpecialPolyMod(size_t n, const Polynomial& modpoly)
 	{
 		size_t deg = algebra::utils::pow(Zp, n);
-		std::vector<int> polynomial(deg + 1);
+		vec polynomial(deg + 1);
 		polynomial[deg] = 1;
 		polynomial[1] = -1;
 		return Polynomial(polynomial) % modpoly;
