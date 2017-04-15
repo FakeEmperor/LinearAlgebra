@@ -2,6 +2,7 @@
 #include <codes/core/ICyclicCode.h>
 #include <eigen/Eigen>
 #include <eigen/Eigenvalues>
+#include <utils/utils.h>
 
 namespace algebra::codes::impl
 {
@@ -36,20 +37,21 @@ namespace algebra::codes::impl
             return nullptr;
         }
 
-        Algebra::Polynomial<Q> *getGenerator() const override {
+        const Polynomial<Q> *getGenerator() const override {
             return nullptr;
         }
 
-        Algebra::Polynomial<Q> *getChecking() const override {
+        const Polynomial<Q> *getChecking() const override {
             return nullptr;
         }
 
         size_t distance() const override {
-            return BLOCK_SIZE - InfoSize;
+            return ReedMullerCode::BLOCK_SIZE - InfoSize;
         }
 
-        static std::unique_ptr<Algebra::Polynomial<Q>> MakeBCHGenerator() {
-            Algebra::Polynomial<Q>::ExpandedGcd()
+        static std::unique_ptr<algebra::Polynomial<Q>> MakeBCHGenerator() {
+            // algebra::Polynomial<Q>::ExpandedGcd()
+            throw ::utils::NotImplementedError();
         }
     private:
 
