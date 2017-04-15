@@ -528,8 +528,10 @@ namespace algebra
 	size_t Polynomial<Zp>::eval(int x_value) const
 	{
 		x_value = mod(x_value, Zp);
-		size_t res = 0;
-		for (size_t i = 0, sz = powers_.size(); i < sz; ++i)
+        if (powers_.size() == 0)
+            return 0;
+		size_t res = powers_[0]; // x^0*a0 = a0
+		for (size_t i = 1, sz = powers_.size(); i < sz; ++i)
 		{
 			auto p = powers_[i];
 			if (p)
