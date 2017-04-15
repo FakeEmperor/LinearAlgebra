@@ -251,7 +251,10 @@ namespace Algebra
 		return *this * -1;
 	}
 
-	template <size_t Zp>
+    //////////////////////// OPERATORS ////////////////////
+
+
+    template <size_t Zp>
 	Polynomial<Zp>& Polynomial<Zp>::operator-=(const Polynomial& p)
 	{
 		return *this += p.negate();
@@ -440,72 +443,23 @@ namespace Algebra
 		return !((*this) == p);
 	}
 
-	template <size_t Zp>
-	Polynomial<Zp>& Polynomial<Zp>::operator*=(const Polynomial& p)
-	{
-		if (*this == Polynomial::One)
-			return *this = p;
-		if (p == Polynomial::One)
-			return *this;
+    template <size_t Zp>
+    bool Polynomial<Zp>::operator<(const Polynomial& p) const
+    {
+        size_t dt = this->deg(), dp = p.deg();
+        if (dt < dp)
+            return true;
+        if (dt > dp)
+            return false;
+        return (*this)[dt] < p[dp];
+    }
 
-		Polynomial res = { 0 };
-		for (size_t idx = 0, s = p.size(); idx < s; ++idx)
-		{
-			if (p[idx])
-			{
-				res += (*this * p[idx]).shift(idx);
-			}
-		}
-		*this = res;
-		return *this;
-	}
+    template <size_t Zp>
+    bool Polynomial<Zp>::operator>(const Polynomial& p) const
+    {
+        return !((*this) < p);
+    }
 
-	template <size_t Zp>
-	Polynomial<Zp> Polynomial<Zp>::operator*(int number) const
-	{
-		number = mod(number, Zp);
-		if (number == 0)
-			return{ 0 };
-		Polynomial res = *this;
-		if (number == 1)
-			return res;
-		for (auto& p : res.powers_)
-		{
-			p = mod((p * number), Zp);
-		}
-		return res;
-	}
-
-	template <size_t Zp>
-	Polynomial<Zp> Polynomial<Zp>::operator*(const Polynomial& p) const
-	{
-		Polynomial res = *this;
-		return res *= p;
-	}
-
-	template <size_t Zp>
-	Polynomial<Zp> Polynomial<Zp>::pow(size_t power) const
-	{
-		if (!power)
-			return{ 1 };
-		if (power == 1)
-			return *this;
-		Polynomial res = One, prev = *this;
-		size_t prev_power = 1;
-		size_t rpower = 1;
-		while (rpower != 0)
-		{
-			if (power & rpower)
-			{
-				// calculate how many pows to prev
-				prev = prev.rpow(rpower / prev_power);
-				res *= prev;
-				prev_power = rpower;
-			}
-			rpower <<= 1;
-		}
-		return res;
-	}
 
 	template <size_t Zp>
 	Polynomial<Zp> Polynomial<Zp>::shift(size_t shift) const
