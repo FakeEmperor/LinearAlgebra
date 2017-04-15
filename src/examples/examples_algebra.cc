@@ -1,18 +1,19 @@
-#define _EXAMPLES_ACTIVE 0
+#define _EXAMPLES_ACTIVE 1
 
 #if defined(_EXAMPLES_ACTIVE) && _EXAMPLES_ACTIVE == 1
 
 #include <iostream>
 #include <vector>
 
-#include "Factorizer.h"
-#include "Polynomial.h"
-#include "GaloisFieldExtension.h"
-#include "ConsecutivePolynomialGenerator.h"
-#include "RandomPolynomialGenerator.h"
+#include <algebra/Factorizer.h>
+#include <algebra/Polynomial.h>
+#include <algebra/GaloisFieldExtension.h>
+#include <algebra/ConsecutivePolynomialGenerator.h>
+#include <algebra/RandomPolynomialGenerator.h>
+#include <set>
 
 
-using namespace Algebra;
+using namespace algebra;
 
 
 void check_k()
@@ -98,12 +99,14 @@ int main() {
 			std::cout << "^" << factor.second;
 		printed = true;
 	}*/
-	RandomPolynomialGenerator<2, 9> generator;
-	auto field = GaloisFieldExtension<2, 9>::Build(generator);
-	field.PrintPretty(std::cout, false);
-
-
-	std::cout << std::endl;
+	constexpr size_t degree = 6;
+	algebra::ConsecutivePolynomialGenerator<2, degree> gen;
+	auto field = algebra::GaloisFieldExtension<2, degree>::Build(gen);
+	std::set<algebra::Polynomial<2>> unique_elems;
+	for (int i = 0, s = field.m_order(); i<s; ++i)
+	{
+        unique_elems.emplace(field[i]);
+	}
 	return 0;
 };
 
