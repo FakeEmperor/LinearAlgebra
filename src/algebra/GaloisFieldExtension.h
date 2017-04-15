@@ -9,6 +9,7 @@
 #include "Polynomial.h"
 #include "Factorizer.h"
 
+#include <utils/utils.h>
 
 namespace algebra
 {
@@ -49,7 +50,7 @@ namespace algebra
 		size_t m_order() const;
 
 		// get element by its order
-		Poly operator[](size_t order) const;
+		Poly operator[](size_t m_order) const;
 
 		// find log_generator(poly mod factor)
 		size_t log_alpha(const Poly& poly) const;
@@ -86,12 +87,12 @@ namespace algebra
 		static Poly FindIrreducible(PolynomialGenerator<Zp, Deg> &generator)
 		{
 			Poly poly = Poly::Zero;
-			std::vector<size_t> vec(Deg + 1);
+			typename Poly::vec vec(Deg + 1);
 			vec[Deg] = 1;
 			// every 1-degree Polynomial is irreducible
-			if (Deg == 1)
+			if (Deg == 1) // select x or x+rand(Zp)
 			{
-				std::random_device rd;
+                std::random_device rd;
 				std::mt19937 mt(rd());
 
 				vec[0] = randmod([&mt]() { return mt(); }, Zp);
@@ -115,7 +116,7 @@ namespace algebra
 		std::vector<std::pair<Poly, size_t>> FactorizeByFieldElements(const Poly& poly) const;
 
 
-		static std::vector<Poly> FindAllIrreducibles(PolynomialGenerator<Zp, Deg> &generator) noexcept(false)
+		static std::vector<Poly> FindAllIrreducibles(PolynomialGenerator<Zp, Deg>& generator) noexcept(false)
 		{
 			std::vector<Poly> res;
 			auto end_deterministic = generator.end_supported();
@@ -198,9 +199,9 @@ namespace algebra
 	}
 
 	template <size_t Zp, size_t Deg>
-	Polynomial<Zp> GaloisFieldExtension<Zp, Deg>::operator[](size_t order) const
+	Polynomial<Zp> GaloisFieldExtension<Zp, Deg>::operator[](size_t m_order) const
 	{
-		return elements_[order];
+		return elements_[m_order];
 	}
 
 	template <size_t Zp, size_t Deg>
@@ -315,12 +316,10 @@ namespace algebra
 		{
 			return RabinTest(poly);
 		}
-
-		return true;
 	}
 
 	template <size_t Zp, size_t Deg>
-	std::vector<std::pair<Polynomial<Zp>, size_t>> GaloisFieldExtension<Zp, Deg>::FactorizeByFieldElements(const Poly& poly) const
+	std::vector<std::pair<algebra::Polynomial<Zp>, size_t>> GaloisFieldExtension<Zp, Deg>::FactorizeByFieldElements(const Poly& poly) const
 	{
 		std::vector<std::pair<Poly, size_t>> factors;
 		// check simple roots
@@ -356,7 +355,8 @@ namespace algebra
 	}
 
 	template <size_t Zp, size_t Deg>
-	GaloisFieldExtension<Zp, Deg> GaloisFieldExtension<Zp, Deg>::Build(const Poly& factor, const Poly& generator, bool test_irreducibilty, bool test_primitivity)
+	GaloisFieldExtension<Zp, Deg> GaloisFieldExtension<Zp, Deg>::Build(const Poly& factor, const Poly& generator,
+                                                                       bool test_irreducibilty, bool test_primitivity)
 	{
 		if (factor.deg() < Deg)
 			throw std::runtime_error("Given polynomial has lesser degree than degree of the field");
@@ -377,7 +377,7 @@ namespace algebra
 		{
 			size_t sz = m_order();
 			s << "Elements of multiplicative group (" << sz << " elements ): " << std::endl;
-			auto space = log10(sz) + 1;
+			int space = (int) (log10(sz) + 1);
 			for (size_t i = 0; i < sz; ++i)
 			{
 				s << "a^" << std::setw(space) << i << " : " << elements_[i] << std::endl;
