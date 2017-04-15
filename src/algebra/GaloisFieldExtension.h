@@ -139,6 +139,11 @@ namespace algebra
 		}
 
 		static GaloisFieldExtension Build(const Poly& factor, const Poly& generator=GaloisFieldExtension::DefaultPrimitive, bool test_irreducibilty = true, bool test_primitivity = true);
+        static GaloisFieldExtension BuildByPrimitive(const Poly& primitive, PolynomialGenerator<Zp, Deg>& generator,
+                                                     bool test_primitivity = true);
+
+        static GaloisFieldExtension BuildByPrimitive(const Poly& factor, const Poly& primtivie,
+                                                     bool test_irreducibility = true, bool test_primitivity = true);
 
 		void PrintPretty(std::ostream& s, bool print_elements = true) const;
 	};
@@ -368,6 +373,26 @@ namespace algebra
 	}
 
 	template <size_t Zp, size_t Deg>
+	GaloisFieldExtension<Zp, Deg> GaloisFieldExtension<Zp, Deg>::BuildByPrimitive(const Poly& factor, const Poly& primitive,
+                                                                                  bool test_irreducibility, bool test_primitivity)
+	{
+		if (factor.deg() < Deg)
+			throw std::runtime_error("Given polynomial has lesser degree than degree of the field");
+		if (test_irreducibility && !TestIrreducibility(factor))
+			throw std::runtime_error("Given polynomial is reducible");
+        //make modulus
+        if (test_primitivity && !TestPrimitivity(primitive, factor))
+			throw std::runtime_error("Given generator is non-primitive");
+		return BuildMultGroup(factor, primitive);
+	}
+    template <size_t Zp, size_t Deg>
+    GaloisFieldExtension<Zp, Deg> GaloisFieldExtension<Zp, Deg>::BuildByPrimitive(const Poly& primitive,
+                                                                                  PolynomialGenerator<Zp, Deg>& gen,
+                                                                                  bool test_primitivity)
+    {
+        return BuildByPrimitive(GaloisFieldExtension::FindIrreducible(gen), primitive, false, test_primitivity);
+    }
+
 	void GaloisFieldExtension<Zp, Deg>::PrintPretty(std::ostream& s, bool print_elements) const
 	{
 		s << "Field GF(" << Zp << "^" << Deg << ")" << " [ " << this->order() << " elements ]" << std::endl;
