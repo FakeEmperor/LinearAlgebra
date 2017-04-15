@@ -10,11 +10,11 @@
 #include <ostream>
 #include <cmath>
 
-#include "utils/utils.h"
+#include <algebra/utils/utils.h>
 #include "Algebra.h"
 
 
-namespace Algebra
+namespace algebra
 {
 	
 	enum class OUTPUT_MODE
