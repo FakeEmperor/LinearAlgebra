@@ -9,7 +9,7 @@ namespace algebra
 	template <size_t Zp, size_t PolynomialDegree>
 	class ConsecutivePolynomialGenerator : public PolynomialGenerator<Zp, PolynomialDegree>
 	{
-		Polynomial<Zp> last_polynomial_ = {};
+		Polynomial<Zp> last_polynomial_ = { 0 };
 		bool end_reached_ = { false };
 	public:
 		virtual Polynomial<Zp> operator()() override;
@@ -30,7 +30,7 @@ namespace algebra
 	Polynomial<Zp> ConsecutivePolynomialGenerator<Zp, PolynomialDegree>::operator()()
 	{
 		end_reached_ = false;
-		if (last_polynomial_.size() == 0)
+		if (last_polynomial_.size() == 0 || last_polynomial_ == 0)
 		{
 			reset();
 			return last_polynomial_;
