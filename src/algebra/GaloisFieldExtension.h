@@ -138,7 +138,9 @@ namespace algebra
 			return BuildMultGroup(gen, FindPrimitive(generator, gen ));
 		}
 
-		static GaloisFieldExtension Build(const Poly& factor, const Poly& generator=GaloisFieldExtension::DefaultPrimitive, bool test_irreducibilty = true, bool test_primitivity = true);
+		static GaloisFieldExtension Build(const Poly& factor,
+                                          const Poly& primitive=GaloisFieldExtension::DefaultPrimitive,
+                                          bool test_irreducibilty = true, bool test_primitivity = true);
         static GaloisFieldExtension BuildByPrimitive(const Poly& primitive, PolynomialGenerator<Zp, Deg>& generator,
                                                      bool test_primitivity = true);
 
@@ -393,6 +395,7 @@ namespace algebra
         return BuildByPrimitive(GaloisFieldExtension::FindIrreducible(gen), primitive, false, test_primitivity);
     }
 
+	template <size_t Zp, size_t Deg>
 	void GaloisFieldExtension<Zp, Deg>::PrintPretty(std::ostream& s, bool print_elements) const
 	{
 		s << "Field GF(" << Zp << "^" << Deg << ")" << " [ " << this->order() << " elements ]" << std::endl;
