@@ -46,6 +46,7 @@ namespace algebra
 		Polynomial		rpow			(size_t num)				const;
 		// use this to construct without normalization (modulus check)
         Polynomial(const std::vector<size_t>& powers, bool normalization);
+        Polynomial(const std::vector<int>& powers, bool normalization);
 		size_t			compute_deg		()							const;
 
 	public:
@@ -57,7 +58,9 @@ namespace algebra
 
 
 		Polynomial						(const std::initializer_list<int>& l);
-		Polynomial						(const vec& powers);
+		Polynomial						(const std::initializer_list<size_t>& l);
+		Polynomial						(const std::vector<int>& powers);
+		Polynomial						(const std::vector<size_t>& powers);
 		Polynomial						(const int constant);
 
 		//// CONTROL FUNCTIONS AND OPERATORS
@@ -198,12 +201,6 @@ namespace algebra
 	}
 
 	template <size_t Zp>
-	Polynomial<Zp>::Polynomial(const vec& powers, bool normalization) :
-		powers_(normalization ? normalize(powers, Zp) : powers), deg_cache_(compute_deg())
-	{
-	}
-
-	template <size_t Zp>
 	size_t Polynomial<Zp>::compute_deg() const
 	{
 		for (size_t i = powers_.size() - 1; i != -1; --i)
@@ -215,23 +212,44 @@ namespace algebra
 	}
 
 
-	template <size_t Zp>
-	Polynomial<Zp>::Polynomial(const std::initializer_list<int>& l) : powers_(normalize(l, Zp)), deg_cache_(compute_deg())
-	{
-	}
+    template<size_t Zp>
+    Polynomial<Zp>::Polynomial(const std::vector<size_t> &powers, bool normalization) :
+            powers_(normalization ? normalize<size_t>(powers, Zp) : powers), deg_cache_(compute_deg())
+    { }
+
+    template<size_t Zp>
+    Polynomial<Zp>::Polynomial(const std::vector<int> &powers, bool normalization) :
+            powers_(
+                    normalization ? normalize<int>(powers, Zp) :
+                    std::vector<size_t>(powers.begin(), powers.end())
+            ), deg_cache_(compute_deg())
+    { }
+
+    //////////////////////// CONSTRUCTORS ////////////////////
 
 	template <size_t Zp>
-	Polynomial<Zp>::Polynomial(const vec& powers) :
+	Polynomial<Zp>::Polynomial(const std::initializer_list<int>& l) : powers_(normalize<int>(l, Zp)), deg_cache_(compute_deg())
+	{ }
+
+    template <size_t Zp>
+    Polynomial<Zp>::Polynomial(const std::initializer_list<size_t> &l) : powers_(normalize<size_t>(l, Zp)), deg_cache_(compute_deg())
+    { }
+
+	template <size_t Zp>
+	Polynomial<Zp>::Polynomial(const std::vector<size_t>& powers) :
 		Polynomial(powers, true)
-	{
-	}
+	{ }
+
+    template <size_t Zp>
+    Polynomial<Zp>::Polynomial(const std::vector<int> &powers) :
+        Polynomial(powers, true)
+    { }
 
 	template <size_t Zp>
 	Polynomial<Zp>::Polynomial(const int constant):
 		powers_({mod(constant, Zp)}), deg_cache_(compute_deg())
-	{
+	{ }
 
-	}
 
 
 	template <size_t Zp>
