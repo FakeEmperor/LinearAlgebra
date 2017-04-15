@@ -1,4 +1,7 @@
 #pragma once
+#ifndef SRC_ALGEBRA_POLYNOMIAL_H
+#define SRC_ALGEBRA_POLYNOMIAL_H
+
 #include <vector>
 #include <algorithm>
 #include <numeric>
@@ -605,5 +608,10 @@ namespace Algebra
 		polynomial[1] = -1;
 		return Polynomial(polynomial) % modpoly;
 	}
+
+
+
+
 }
 
+#endif // SRC_ALGEBRA_POLYNOMIAL_H
