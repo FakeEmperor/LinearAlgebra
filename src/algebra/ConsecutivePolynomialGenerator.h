@@ -2,7 +2,7 @@
 #include "PolynomialGenerator.h"
 
 
-namespace Algebra
+namespace algebra
 {
 	// Generates canonical polynomials of degree PolynomialDegree consecutively (if degree is 2, and Zp=2: x^2, x^2+1, x^2+x, x^2+x+1). 
 	// Will cycle after generating all possible Polynomials, setting end_reached = true, once reached
