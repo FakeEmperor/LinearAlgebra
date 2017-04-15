@@ -243,11 +243,18 @@ namespace algebra
 	{
 		auto adjoints = GetAdjointElements(elem_index);
 		auto poly = Poly::X - elements_[elem_index];
-		for (auto adjoint : adjoints)
-		{
-			poly *= Poly::X - elements_[adjoint];
-		}
-		return poly;
+        size_t poly_deg = adjoints.size();
+        typename Poly::vec v(poly_deg+1);
+        v[poly_deg] = 1;
+        // FIND all placements without repetitions
+        for (size_t ideg = 0; ideg<poly_deg - 1; ++ideg) {
+             ;
+        }
+
+        throw ::utils::NotImplementedError("TODO: make it ");
+
+
+        return poly;
 	}
 
 	template <size_t Zp, size_t Deg>
@@ -387,6 +394,7 @@ namespace algebra
 			throw std::runtime_error("Given generator is non-primitive");
 		return BuildMultGroup(factor, primitive);
 	}
+
     template <size_t Zp, size_t Deg>
     GaloisFieldExtension<Zp, Deg> GaloisFieldExtension<Zp, Deg>::BuildByPrimitive(const Poly& primitive,
                                                                                   PolynomialGenerator<Zp, Deg>& gen,
