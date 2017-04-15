@@ -1,14 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25402.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LinearAlgebra", "LinearAlgebra\LinearAlgebra.vcxproj", "{EB4FC7FA-8A98-4276-A161-2556D7E6A5AF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CyclicCodes", "CyclicCodes\CyclicCodes.vcxproj", "{F157EC3E-242E-4814-BD05-A1B4FD2B688E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{EB4FC7FA-8A98-4276-A161-2556D7E6A5AF} = {EB4FC7FA-8A98-4276-A161-2556D7E6A5AF}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharedUtils", "SharedUtils\SharedUtils.vcxitems", "{45D41ACC-2C3C-43D2-BC10-02AA73FFC7C7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "Tests\Tests.vcxproj", "{26FCD334-F8FE-46CC-BEE1-E1D1C78A708F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Codes", "Codes\Codes.vcxproj", "{BB52E4BA-7622-46BD-BB84-8D603EFB599E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,14 +27,22 @@ Global
 		{EB4FC7FA-8A98-4276-A161-2556D7E6A5AF}.Release|x64.Build.0 = Release|x64
 		{EB4FC7FA-8A98-4276-A161-2556D7E6A5AF}.Release|x86.ActiveCfg = Release|Win32
 		{EB4FC7FA-8A98-4276-A161-2556D7E6A5AF}.Release|x86.Build.0 = Release|Win32
-		{F157EC3E-242E-4814-BD05-A1B4FD2B688E}.Debug|x64.ActiveCfg = Debug|x64
-		{F157EC3E-242E-4814-BD05-A1B4FD2B688E}.Debug|x64.Build.0 = Debug|x64
-		{F157EC3E-242E-4814-BD05-A1B4FD2B688E}.Debug|x86.ActiveCfg = Debug|Win32
-		{F157EC3E-242E-4814-BD05-A1B4FD2B688E}.Debug|x86.Build.0 = Debug|Win32
-		{F157EC3E-242E-4814-BD05-A1B4FD2B688E}.Release|x64.ActiveCfg = Release|x64
-		{F157EC3E-242E-4814-BD05-A1B4FD2B688E}.Release|x64.Build.0 = Release|x64
-		{F157EC3E-242E-4814-BD05-A1B4FD2B688E}.Release|x86.ActiveCfg = Release|Win32
-		{F157EC3E-242E-4814-BD05-A1B4FD2B688E}.Release|x86.Build.0 = Release|Win32
+		{26FCD334-F8FE-46CC-BEE1-E1D1C78A708F}.Debug|x64.ActiveCfg = Debug|x64
+		{26FCD334-F8FE-46CC-BEE1-E1D1C78A708F}.Debug|x64.Build.0 = Debug|x64
+		{26FCD334-F8FE-46CC-BEE1-E1D1C78A708F}.Debug|x86.ActiveCfg = Debug|Win32
+		{26FCD334-F8FE-46CC-BEE1-E1D1C78A708F}.Debug|x86.Build.0 = Debug|Win32
+		{26FCD334-F8FE-46CC-BEE1-E1D1C78A708F}.Release|x64.ActiveCfg = Release|x64
+		{26FCD334-F8FE-46CC-BEE1-E1D1C78A708F}.Release|x64.Build.0 = Release|x64
+		{26FCD334-F8FE-46CC-BEE1-E1D1C78A708F}.Release|x86.ActiveCfg = Release|Win32
+		{26FCD334-F8FE-46CC-BEE1-E1D1C78A708F}.Release|x86.Build.0 = Release|Win32
+		{BB52E4BA-7622-46BD-BB84-8D603EFB599E}.Debug|x64.ActiveCfg = Debug|x64
+		{BB52E4BA-7622-46BD-BB84-8D603EFB599E}.Debug|x64.Build.0 = Debug|x64
+		{BB52E4BA-7622-46BD-BB84-8D603EFB599E}.Debug|x86.ActiveCfg = Debug|Win32
+		{BB52E4BA-7622-46BD-BB84-8D603EFB599E}.Debug|x86.Build.0 = Debug|Win32
+		{BB52E4BA-7622-46BD-BB84-8D603EFB599E}.Release|x64.ActiveCfg = Release|x64
+		{BB52E4BA-7622-46BD-BB84-8D603EFB599E}.Release|x64.Build.0 = Release|x64
+		{BB52E4BA-7622-46BD-BB84-8D603EFB599E}.Release|x86.ActiveCfg = Release|Win32
+		{BB52E4BA-7622-46BD-BB84-8D603EFB599E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
