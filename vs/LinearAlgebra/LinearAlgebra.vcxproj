@@ -82,6 +82,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -111,21 +112,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="algebra\Algebra.cc" />
+    <ClCompile Include="algebra\algebra.cc" />
     <ClCompile Include="algebra\examples.cc" />
     <ClCompile Include="algebra\Factorizer.cc" />
     <ClCompile Include="algebra\Polynomial.cc" />
+    <ClCompile Include="algebra\utils\utils.cc" />
     <ClCompile Include="Tests\test_algebra.cpp" />
     <ClCompile Include="Tests\test_main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="algebra\Algebra.h" />
+    <ClInclude Include="algebra\algebra.h" />
+    <ClInclude Include="algebra\common\combinatorics.h" />
     <ClInclude Include="algebra\ConsecutivePolynomialGenerator.h" />
     <ClInclude Include="algebra\Factorizer.h" />
     <ClInclude Include="algebra\GaloisFieldExtension.h" />
     <ClInclude Include="algebra\Polynomial.h" />
     <ClInclude Include="algebra\PolynomialGenerator.h" />
     <ClInclude Include="algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="algebra\utils\utils.h" />
     <ClInclude Include="Tests\catch.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

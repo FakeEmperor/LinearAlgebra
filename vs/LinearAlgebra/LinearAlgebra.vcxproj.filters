@@ -13,15 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Algebra">
+    <Filter Include="Header Files\algebra">
       <UniqueIdentifier>{1abd0447-1154-4fba-b3af-903129c6f322}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Algebra">
+    <Filter Include="Source Files\algebra">
       <UniqueIdentifier>{4b81bd33-51ae-4e46-8c5c-5d297cedbe44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="algebra\Algebra.cc">
+    <ClCompile Include="algebra\algebra.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="algebra\examples.cc">
@@ -39,9 +39,12 @@
     <ClCompile Include="Tests\test_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="algebra\utils\utils.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="algebra\Algebra.h">
+    <ClInclude Include="algebra\algebra.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="algebra\ConsecutivePolynomialGenerator.h">
@@ -63,6 +66,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tests\catch.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="algebra\common\combinatorics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="algebra\utils\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
