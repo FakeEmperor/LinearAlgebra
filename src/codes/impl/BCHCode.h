@@ -11,12 +11,16 @@
 
 namespace algebra::codes::impl
 {
-    template <size_t Q = 2, size_t QPower = 2, size_t MinErrors>
+    /**
+     * @param MinErrors - constructive distance
+     **/
+    template <size_t Q = 2, size_t QPower = 2, size_t MinErrors = utils::cpow(Q, QPower - 1) -1>
     class BCHCode: public ICyclicCode<Q, QPower> {
-        static_assert(MinErrors < (utils::pow(Q, QPower) - 1) / 2,
+        static_assert(MinErrors < (utils::cpow(Q, QPower) - 1) / 2,
                       "'MinErrors' cannot be more than a half of block size (Q^QPower - 1)");
     private:
-        std::unique_ptr<Algebra::Polynomial<Q>> g_, h_;
+
+        std::unique_ptr<algebra::Polynomial<Q>> g_, h_;
         bool got_h_ = { false };
 
     public:
@@ -30,22 +34,34 @@ namespace algebra::codes::impl
 
 
 
-        Algebra::Polynomial<Q> *getGenerator() const override {
+        const Polynomial<Q> *getGenerator() const override {
             return g_.get();
         }
 
-        Algebra::Polynomial<Q> *getChecking() const override {
+        const Polynomial<Q> *getChecking() const override {
             if (got_h_)
                 return h_.get();
             else
                 throw std::runtime_error("Not implemented");
         }
 
-        Algebra::Polynomial<Q> MakeGenerator() const {
+        static Polynomial<Q> MakeGenerator(algebra::GaloisFieldExtension<Q, QPower> &field) {
+            Polynomial<Q> gen_poly = 1;
+            for (size_t i = 0; i < 2*MinErrors; ++i)
+            {
+                auto min = field.FindMinimalPolynomial(i);
+                gen_poly *= min;
+                gen_poly /= min.Gcd(min, gen_poly);
+            }
+            //return field.FindMinimalPolynomial(decltype(field)::Poly::X);
+            return gen_poly;
+        }
+
+        static Polynomial<Q> MakeGenerator() {
             // make field
-            auto gen = Algebra::RandomPolynomialGenerator<Q, QPower>();
-            auto field = Algebra::GaloisFieldExtension<Q, QPower>::Build(gen);
-            return field.FindMinimalPolynomial(0);
+            algebra::RandomPolynomialGenerator<Q, QPower> gen;
+            auto field = algebra::GaloisFieldExtension<Q, QPower>::Build(gen);
+            return MakeGenerator(field);
         }
 
         size_t distance() const override {
