@@ -29,9 +29,11 @@ namespace Algebra
 	template <size_t Zp>
 	// FROM LEFT TO RIGHT: 0 0 1 - x^2
 	class Polynomial {
-		static_assert(Zp > 1, "Zp cannot be less than 2");
-
+    public:
 		typedef std::vector<size_t> vec;
+    private:
+        static_assert(Zp > 1, "Zp cannot be less than 2");
+
 
 		vec powers_;
 
@@ -40,7 +42,7 @@ namespace Algebra
 		// used inside pow() - just dumb * cycle
 		Polynomial		rpow			(size_t num)				const;
 		// use this to construct without normalization (modulus check)
-		Polynomial						(const vec& powers, bool normalization);
+        Polynomial(const std::vector<size_t>& powers, bool normalization);
 		size_t			compute_deg		()							const;
 
 	public:
@@ -287,6 +289,137 @@ namespace Algebra
 		return res += p;
 	}
 
+    template <size_t Zp>
+    Polynomial<Zp>& Polynomial<Zp>::operator*=(const Polynomial& p)
+    {
+        if (*this == Polynomial::One)
+            return *this = p;
+        if (p == Polynomial::One)
+            return *this;
+
+        Polynomial res = { 0 };
+        for (size_t idx = 0, s = p.size(); idx < s; ++idx)
+        {
+            if (p[idx])
+            {
+                res += (*this * p[idx]).shift(idx);
+            }
+        }
+        *this = res;
+        return *this;
+    }
+
+    template <size_t Zp>
+    Polynomial<Zp> Polynomial<Zp>::operator*(int number) const
+    {
+        number = mod(number, Zp);
+        if (number == 0)
+            return{ 0 };
+        Polynomial res = *this;
+        if (number == 1)
+            return res;
+        for (auto& p : res.powers_)
+        {
+            p = mod((p * number), Zp);
+        }
+        return res;
+    }
+
+    template <size_t Zp>
+    Polynomial<Zp> Polynomial<Zp>::operator*(const Polynomial& p) const
+    {
+        Polynomial res = *this;
+        return res *= p;
+    }
+
+    template <size_t Zp>
+    Polynomial<Zp> Polynomial<Zp>::pow(size_t power) const
+    {
+        if (!power)
+            return{ 1 };
+        if (power == 1)
+            return *this;
+        Polynomial res = One, prev = *this;
+        size_t prev_power = 1;
+        size_t rpower = 1;
+        while (rpower != 0)
+        {
+            if (power & rpower)
+            {
+                // calculate how many pows to prev
+                prev = prev.rpow(rpower / prev_power);
+                res *= prev;
+                prev_power = rpower;
+            }
+            rpower <<= 1;
+        }
+        return res;
+    }
+
+    template <size_t Zp>
+    std::pair<Polynomial<Zp>, Polynomial<Zp>> Polynomial<Zp>::divide(const Polynomial& p) const
+    {
+        if (p == Polynomial::Zero)
+            throw std::runtime_error("Cannot divide by zero");
+
+        size_t dt = this->deg(), dp = p.deg();
+        if (dp > dt)
+            return std::make_pair(Polynomial::Zero, *this);
+        Polynomial quotient = vec(dt - dp + 1);
+        Polynomial remainder = *this;
+
+        auto leading_coefficient = p[dp];
+        bool end = false;
+
+        while (dt >= dp && remainder != Polynomial::Zero && !end)
+        {
+            size_t shift_value = dt - dp; // x^3 / x - shift value will be 2
+            size_t coefficient = expanded_gcd(leading_coefficient, remainder[dt], Zp);
+            if (coefficient == -1)
+            {
+                if (DivisionPolicy == DIVISION_CORRUPTION_POLICY::THROW)
+                    throw std::runtime_error("Cannot find the coefficients wich will suffice the equation");
+                else
+                {
+                    // try to find a solution
+                    coefficient = remainder[dt] / coefficient;
+                    if (!coefficient)
+                        coefficient = 1;
+                    end = true;
+                }
+            }
+            quotient.set(shift_value, coefficient);
+            remainder -= (p * coefficient).shift(shift_value);
+            dt = remainder.deg();
+        }
+        return std::make_pair(quotient, remainder);
+    }
+
+    template <size_t Zp>
+    Polynomial<Zp> Polynomial<Zp>::operator%(const Polynomial& p)
+    {
+        return this->divide(p).second;
+    }
+
+    template <size_t Zp>
+    Polynomial<Zp>& Polynomial<Zp>::operator%=(const Polynomial& p)
+    {
+        *this = *this % p;
+        return *this;
+    }
+
+    template <size_t Zp>
+    Polynomial<Zp> Polynomial<Zp>::operator/(const Polynomial& p)
+    {
+        return this->divide(p).first;
+    }
+
+    template <size_t Zp>
+    Polynomial<Zp>& Polynomial<Zp>::operator/=(const Polynomial& p)
+    {
+        *this = *this / p;
+        return *this;
+    }
 	template <size_t Zp>
 	bool Polynomial<Zp>::operator==(const Polynomial& p) const
 	{
@@ -447,89 +580,7 @@ namespace Algebra
 		return res;
 	}
 
-	
 
-	template <size_t Zp>
-	std::pair<Polynomial<Zp>, Polynomial<Zp>> Polynomial<Zp>::divide(const Polynomial& p) const
-	{
-		if (p == Polynomial::Zero)
-			throw std::runtime_error("Cannot divide by zero");
-
-		size_t dt = this->deg(), dp = p.deg();
-		if (dp > dt)
-			return std::make_pair(Polynomial::Zero, *this);
-		Polynomial quotient = std::vector<int>(dt - dp + 1);
-		Polynomial remainder = *this;
-
-		auto leading_coefficient = p[dp];
-		bool end = false;
-
-		while (dt >= dp && remainder != Polynomial::Zero && !end)
-		{
-			size_t shift_value = dt - dp; // x^3 / x - shift value will be 2
-			size_t coefficient = expanded_gcd(leading_coefficient, remainder[dt], Zp);
-			if (coefficient == -1)
-			{
-				if (DivisionPolicy == DIVISION_CORRUPTION_POLICY::THROW)
-					throw std::runtime_error("Cannot find the coefficients wich will suffice the equation");
-				else
-				{
-					// try to find a solution
-					coefficient = remainder[dt] / coefficient;
-					if (!coefficient)
-						coefficient = 1;
-					end = true;
-				}
-			}
-			quotient.set(shift_value, coefficient);
-			remainder -= (p * coefficient).shift(shift_value);
-			dt = remainder.deg();
-		}
-		return std::make_pair(quotient, remainder);
-	}
-
-	template <size_t Zp>
-	Polynomial<Zp> Polynomial<Zp>::operator%(const Polynomial& p)
-	{
-		return this->divide(p).second;
-	}
-
-	template <size_t Zp>
-	Polynomial<Zp>& Polynomial<Zp>::operator%=(const Polynomial& p)
-	{
-		*this = *this % p;
-		return *this;
-	}
-
-	template <size_t Zp>
-	Polynomial<Zp> Polynomial<Zp>::operator/(const Polynomial& p)
-	{
-		return this->divide(p).first;
-	}
-
-	template <size_t Zp>
-	Polynomial<Zp>& Polynomial<Zp>::operator/=(const Polynomial& p)
-	{
-		*this = *this / p;
-		return *this;
-	}
-
-	template <size_t Zp>
-	bool Polynomial<Zp>::operator<(const Polynomial& p) const
-	{
-		size_t dt = this->deg(), dp = p.deg();
-		if (dt < dp)
-			return true;
-		if (dt > dp)
-			return false;
-		return (*this)[dt] < p[dp];
-	}
-
-	template <size_t Zp>
-	bool Polynomial<Zp>::operator>(const Polynomial& p) const
-	{
-		return !((*this) < p);
-	}
 
 	template <size_t Zp>
 	Polynomial<Zp> Polynomial<Zp>::Gcd(const Polynomial& p1, const Polynomial& p2)
