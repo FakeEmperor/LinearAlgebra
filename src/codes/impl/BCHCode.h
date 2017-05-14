@@ -28,11 +28,11 @@ namespace algebra::codes::impl
         // All necessary information (g(x), primitive element for field, modulus)
         // will be generated randomly using default
         // generation algorithms
-        BCHCode() : g_(std::make_unique(BCHCode::MakeGenerator())) {
+        BCHCode() : g_(std::make_unique<algebra::Polynomial<Q>>(BCHCode::MakeGenerator())) {
 
         }
 
-
+        virtual ~BCHCode() = default;
 
         const Polynomial<Q> *getGenerator() const override {
             return g_.get();
@@ -68,8 +68,29 @@ namespace algebra::codes::impl
             return MinErrors*2;
         }
 
+        size_t infoSize() const override {
+            throw ::utils::NotImplementedError("BCHCode::infoSize()");
+        }
+
+        size_t blockSize() const override {
+            throw ::utils::NotImplementedError("BCHCode::blockSize()");
+        }
+
+
+        std::unique_ptr<ICodeData> encode(const data &in) const override {
+            throw ::utils::NotImplementedError();
+        }
+
+        std::unique_ptr<ICodeData> decode(const ICodeData *in) const override {
+            throw ::utils::NotImplementedError();
+        }
+
+        std::unique_ptr<ICodeData> errors(const ICodeData *in) const override {
+            return nullptr;
+        }
+
+
     };
 
+    };
 
-
-}
