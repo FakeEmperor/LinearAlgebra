@@ -477,7 +477,10 @@ namespace algebra
             return true;
         if (dt > dp)
             return false;
-        return (*this)[dt] < p[dp];
+        // degrees are equal: then check other powers:
+		for (size_t check_power = dt; check_power != -1; --check_power)
+			if ((*this)[check_power] != p[check_power]) return (*this)[check_power] < p[check_power];
+		return false; // equal
     }
 
     template <size_t Zp>
