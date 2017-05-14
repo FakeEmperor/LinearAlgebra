@@ -15,7 +15,7 @@ namespace algebra
         template <size_t Q, size_t QPower>
 		class ICyclicCode : public ILinearCode {
 		public:
-            static constexpr size_t BLOCK_SIZE = static_cast<size_t>(powl(Q, QPower)) - 1;
+            static constexpr size_t BLOCK_SIZE = static_cast<size_t>(utils::cpow(Q, QPower)) - 1;
 
             virtual ~ICyclicCode() = default;
 
