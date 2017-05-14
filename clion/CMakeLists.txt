@@ -13,7 +13,13 @@ file(GLOB SOURCES_UTILS
 
 file(GLOB SOURCES_ALGEBRA
         "../src/algebra/*.h"
+        "../src/algebra/finite/*.h"
+        "../src/algebra/finite/impl*.h"
+
         "../src/algebra/*.cc"
+        "../src/algebra/finite/*.cc"
+        "../src/algebra/finite/impl/*.cc"
+
         "../src/algebra/utils/*.h"
         "../src/algebra/utils/*.cc"
 )
