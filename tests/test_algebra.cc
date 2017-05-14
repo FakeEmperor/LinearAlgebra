@@ -6,6 +6,16 @@
 #include <algebra/ConsecutivePolynomialGenerator.h>
 #include <algebra/common/combinatorics.h>
 
+#include <algebra/finite/Group.h>
+#include <algebra/finite/impl/IntGroup.h>
+
+TEST_CASE("Finite group is building",
+		  "[algebra][finite][group]") {
+	algebra::finite::impl::IntAdditiveGroup<size_t> a(6);
+
+}
+
+
 TEST_CASE("Algebra polynomial division is working",
           "[algebra][polynomial]")
 {
@@ -16,6 +26,19 @@ TEST_CASE("Algebra polynomial division is working",
 	algebra::Polynomial<2> p1(m1_x), p2(m2_x), pres(division_result);
 	
 	REQUIRE(p1 / p2 == pres);
+}
+
+TEST_CASE("Polynomials are placed inside set correctly", "[algebra][polynomial][stl]")
+{
+	const std::array<algebra::Polynomial<2>, 2> ps = {{
+		{{0, 0, 0, 0, 1, 1}}, {{1, 1, 0, 0, 0, 1, 0}}
+	}};
+	std::set<algebra::Polynomial<2>> sets;
+	for (int i = 0, s = ps.size(); i<s; ++i)
+	{
+		sets.emplace(ps[i]);
+	}
+	REQUIRE(sets.size() == ps.size());
 }
 
 TEST_CASE("Algebra Field building is working",
@@ -29,7 +52,7 @@ TEST_CASE("Algebra Field building is working",
 	{
 		sets.emplace(field[i]);
 	}
-	REQUIRE(sets.size() == (size_t)pow(2, degree));
+	REQUIRE(sets.size() == (size_t)pow(2, degree)-1);
 
 
 }
