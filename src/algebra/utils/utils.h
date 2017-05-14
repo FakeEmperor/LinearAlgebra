@@ -9,6 +9,8 @@
 
 namespace algebra::utils {
     size_t pow(size_t a, size_t n);
-    constexpr size_t cpow(size_t a, size_t n, size_t res = 1);
+    constexpr size_t cpow(size_t a, size_t n, size_t res = 1) {
+        return n < 1 ? res : ( res*=a, n/=2, algebra::utils::cpow(a, n, res) );
+    }
 }
 #endif
