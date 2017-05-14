@@ -19,60 +19,63 @@
     <Filter Include="Source Files\algebra">
       <UniqueIdentifier>{4b81bd33-51ae-4e46-8c5c-5d297cedbe44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\algebra\utils">
+      <UniqueIdentifier>{14afa3ee-437d-465a-8c21-1b658806858b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\algebra\utils">
+      <UniqueIdentifier>{4c4027ff-144c-4da3-9f66-699e2f58a9c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common">
+      <UniqueIdentifier>{b87ac84e-cb2d-4dcd-8bbb-b5bbad6f5dfa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="algebra\algebra.cc">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\src\algebra\Algebra.cc">
+      <Filter>Source Files\algebra</Filter>
     </ClCompile>
-    <ClCompile Include="algebra\examples.cc">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\src\algebra\Factorizer.cc">
+      <Filter>Source Files\algebra</Filter>
     </ClCompile>
-    <ClCompile Include="algebra\Factorizer.cc">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\src\algebra\Polynomial.cc">
+      <Filter>Source Files\algebra</Filter>
     </ClCompile>
-    <ClCompile Include="algebra\Polynomial.cc">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\src\algebra\utils\utils.cc">
+      <Filter>Source Files\algebra\utils</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\test_algebra.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tests\test_main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="algebra\utils\utils.cc">
+    <ClCompile Include="..\..\src\examples\examples_algebra.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="algebra\algebra.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="algebra\ConsecutivePolynomialGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="algebra\Factorizer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="algebra\GaloisFieldExtension.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="algebra\Polynomial.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="algebra\PolynomialGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="algebra\RandomPolynomialGenerator.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\src\algebra\Algebra.h">
+      <Filter>Header Files\algebra</Filter>
     </ClInclude>
     <ClInclude Include="Tests\catch.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\algebra</Filter>
     </ClInclude>
-    <ClInclude Include="algebra\common\combinatorics.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h">
+      <Filter>Header Files\algebra</Filter>
     </ClInclude>
-    <ClInclude Include="algebra\utils\utils.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\src\algebra\Factorizer.h">
+      <Filter>Header Files\algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h">
+      <Filter>Header Files\algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\algebra\Polynomial.h">
+      <Filter>Header Files\algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h">
+      <Filter>Header Files\algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h">
+      <Filter>Header Files\algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\algebra\utils\utils.h">
+      <Filter>Header Files\algebra\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\algebra\common\combinatorics.h">
+      <Filter>Header Files\common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -19,9 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{BB52E4BA-7622-46BD-BB84-8D603EFB599E}</ProjectGuid>
-    <RootNamespace>Codes</RootNamespace>
+    <ProjectGuid>{26FCD334-F8FE-46CC-BEE1-E1D1C78A708F}</ProjectGuid>
+    <RootNamespace>Tests</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>Tests_FiniteAlgebra</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -69,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)../include/;$(SolutionDir)../src/;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)../src/;$(SolutionDir)../include/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -114,16 +115,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\codes\core\IBlockCode.h" />
-    <ClInclude Include="..\..\src\codes\core\ICode.h" />
-    <ClInclude Include="..\..\src\codes\core\ICodeData.h" />
-    <ClInclude Include="..\..\src\codes\core\ICyclicCode.h" />
-    <ClInclude Include="..\..\src\codes\core\ILinearCode.h" />
-    <ClInclude Include="..\..\src\codes\impl\BCHCode.h" />
-    <ClInclude Include="..\..\src\codes\impl\ReedMullerCode.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\examples\examples_codes.cc" />
+    <ClCompile Include="..\..\tests\test_algebra.cc" />
+    <ClCompile Include="..\..\src\algebra\*.cc" />
+    <ClCompile Include="..\..\src\algebra\*\*.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{BB52E4BA-7622-46BD-BB84-8D603EFB599E}</ProjectGuid>
-    <RootNamespace>Codes</RootNamespace>
+    <ProjectGuid>{7E0FA482-8F60-455C-98CA-2D0E891F34C5}</ProjectGuid>
+    <RootNamespace>Tests_Codes</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -68,9 +68,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)../include/;$(SolutionDir)../src/;$(IncludePath)</IncludePath>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -84,7 +82,6 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)../include/;$(SolutionDir)../src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -114,16 +111,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\codes\core\IBlockCode.h" />
-    <ClInclude Include="..\..\src\codes\core\ICode.h" />
-    <ClInclude Include="..\..\src\codes\core\ICodeData.h" />
-    <ClInclude Include="..\..\src\codes\core\ICyclicCode.h" />
-    <ClInclude Include="..\..\src\codes\core\ILinearCode.h" />
-    <ClInclude Include="..\..\src\codes\impl\BCHCode.h" />
-    <ClInclude Include="..\..\src\codes\impl\ReedMullerCode.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\examples\examples_codes.cc" />
+    <ClCompile Include="..\..\tests\test_codes.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

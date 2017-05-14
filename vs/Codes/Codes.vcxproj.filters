@@ -13,28 +13,42 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\codes">
+      <UniqueIdentifier>{bed780ce-2961-4a4b-8ef3-ae83a0d7bb51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\codes\impl">
+      <UniqueIdentifier>{805c4b9a-50a6-4f7a-9971-fb6511c80a93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\codes\core">
+      <UniqueIdentifier>{f5d8fb8d-d06f-4365-a911-383bf3ceec65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="codes\core\IBlockCode.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\src\codes\impl\BCHCode.h">
+      <Filter>Header Files\codes\impl</Filter>
     </ClInclude>
-    <ClInclude Include="codes\core\ICode.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\src\codes\impl\ReedMullerCode.h">
+      <Filter>Header Files\codes\impl</Filter>
     </ClInclude>
-    <ClInclude Include="codes\core\ICodeData.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\src\codes\core\IBlockCode.h">
+      <Filter>Header Files\codes\core</Filter>
     </ClInclude>
-    <ClInclude Include="codes\core\ICyclicCode.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\src\codes\core\ICode.h">
+      <Filter>Header Files\codes\core</Filter>
     </ClInclude>
-    <ClInclude Include="codes\core\ILinearCode.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\src\codes\core\ICodeData.h">
+      <Filter>Header Files\codes\core</Filter>
     </ClInclude>
-    <ClInclude Include="codes\impl\BCHCode.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\src\codes\core\ICyclicCode.h">
+      <Filter>Header Files\codes\core</Filter>
     </ClInclude>
-    <ClInclude Include="codes\impl\ReedMullerCode.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\src\codes\core\ILinearCode.h">
+      <Filter>Header Files\codes\core</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\examples\examples_codes.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

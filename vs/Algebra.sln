@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LinearAlgebra", "LinearAlgebra\LinearAlgebra.vcxproj", "{EB4FC7FA-8A98-4276-A161-2556D7E6A5AF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FiniteAlgebra", "LinearAlgebra\LinearAlgebra.vcxproj", "{EB4FC7FA-8A98-4276-A161-2556D7E6A5AF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharedUtils", "SharedUtils\SharedUtils.vcxitems", "{45D41ACC-2C3C-43D2-BC10-02AA73FFC7C7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "Tests\Tests.vcxproj", "{26FCD334-F8FE-46CC-BEE1-E1D1C78A708F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests_FiniteAlgebra", "Tests\Tests.vcxproj", "{26FCD334-F8FE-46CC-BEE1-E1D1C78A708F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Codes", "Codes\Codes.vcxproj", "{BB52E4BA-7622-46BD-BB84-8D603EFB599E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests_Codes", "Tests_Codes\Tests_Codes.vcxproj", "{7E0FA482-8F60-455C-98CA-2D0E891F34C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,14 @@ Global
 		{BB52E4BA-7622-46BD-BB84-8D603EFB599E}.Release|x64.Build.0 = Release|x64
 		{BB52E4BA-7622-46BD-BB84-8D603EFB599E}.Release|x86.ActiveCfg = Release|Win32
 		{BB52E4BA-7622-46BD-BB84-8D603EFB599E}.Release|x86.Build.0 = Release|Win32
+		{7E0FA482-8F60-455C-98CA-2D0E891F34C5}.Debug|x64.ActiveCfg = Debug|x64
+		{7E0FA482-8F60-455C-98CA-2D0E891F34C5}.Debug|x64.Build.0 = Debug|x64
+		{7E0FA482-8F60-455C-98CA-2D0E891F34C5}.Debug|x86.ActiveCfg = Debug|Win32
+		{7E0FA482-8F60-455C-98CA-2D0E891F34C5}.Debug|x86.Build.0 = Debug|Win32
+		{7E0FA482-8F60-455C-98CA-2D0E891F34C5}.Release|x64.ActiveCfg = Release|x64
+		{7E0FA482-8F60-455C-98CA-2D0E891F34C5}.Release|x64.Build.0 = Release|x64
+		{7E0FA482-8F60-455C-98CA-2D0E891F34C5}.Release|x86.ActiveCfg = Release|Win32
+		{7E0FA482-8F60-455C-98CA-2D0E891F34C5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
