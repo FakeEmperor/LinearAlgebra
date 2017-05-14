@@ -32,9 +32,10 @@ namespace utils {
     class NotImplementedError : public std::runtime_error {
     public:
         static const std::string STATIC_MSG;
-        NotImplementedError(const std::string &msg);
-        NotImplementedError(const char *msg);
+        NotImplementedError(const std::string &msg, const std::string &method_name = "");
+        NotImplementedError(const char *msg, const char *method_name = nullptr);
         NotImplementedError();
+        static std::string BuildMsg(const std::string &method_name, const std::string &msg);
     };
 
 
