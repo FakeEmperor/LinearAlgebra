@@ -86,6 +86,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)../include/;$(SolutionDir)../src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -115,9 +116,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\test_algebra.cc" />
     <ClCompile Include="..\..\src\algebra\*.cc" />
-    <ClCompile Include="..\..\src\algebra\*\*.cc" />
+    <ClCompile Include="..\..\src\algebra\*\*.cc">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)/%(RelativeDir)/utils_algebra.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\src\algebra\*\*\*.cc" />
+    <ClCompile Include="..\..\src\utils\*.cc">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)/%(RelativeDir)/utils_.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\test_algebra.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\utils\*.h" />
+    <ClInclude Include="..\..\src\algebra\*.h" />
+    <ClInclude Include="..\..\src\algebra\*\*.h" />
+    <ClInclude Include="..\..\src\algebra\*\*\*.h" />
+    <ClInclude Include="..\..\tests\catch.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

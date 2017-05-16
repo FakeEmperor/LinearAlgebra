@@ -117,12 +117,13 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\algebra\*.cc" />
     <ClCompile Include="..\..\src\algebra\*\*.cc" />
+    <ClCompile Include="..\..\src\algebra\*\*\*.cc" />
     <ClCompile Include="..\..\src\examples\examples_algebra.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\algebra\*.h" />
     <ClInclude Include="..\..\src\algebra\*\*.h" />
-    <ClInclude Include="Tests\catch.hpp" />
+    <ClInclude Include="..\..\src\algebra\*\*\*.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -25,57 +25,239 @@
     <Filter Include="Header Files\algebra\utils">
       <UniqueIdentifier>{4c4027ff-144c-4da3-9f66-699e2f58a9c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\common">
+    <Filter Include="Header Files\algebra\common">
       <UniqueIdentifier>{b87ac84e-cb2d-4dcd-8bbb-b5bbad6f5dfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\algebra\finite">
+      <UniqueIdentifier>{95a62180-1556-43d3-bb97-ccf058673423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\algebra\finite\impl">
+      <UniqueIdentifier>{0fd151dc-6d33-4a07-8c08-db1abd599023}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\algebra\Algebra.cc">
-      <Filter>Source Files\algebra</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\algebra\Factorizer.cc">
-      <Filter>Source Files\algebra</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\algebra\Polynomial.cc">
-      <Filter>Source Files\algebra</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\algebra\utils\utils.cc">
-      <Filter>Source Files\algebra\utils</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\examples\examples_algebra.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\algebra\*.cc">
+      <Filter>Source Files\algebra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\algebra\Factorizer.cc" />
+    <ClCompile Include="..\..\src\algebra\Polynomial.cc" />
+    <ClCompile Include="..\..\src\algebra\Factorizer.cc" />
+    <ClCompile Include="..\..\src\algebra\Polynomial.cc" />
+    <ClCompile Include="..\..\src\algebra\Algebra.cc">
+      <Filter>Source Files\algebra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\algebra\Factorizer.cc" />
+    <ClCompile Include="..\..\src\algebra\Polynomial.cc" />
+    <ClCompile Include="..\..\src\algebra\Algebra.cc">
+      <Filter>Source Files\algebra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\algebra\Factorizer.cc" />
+    <ClCompile Include="..\..\src\algebra\Polynomial.cc" />
+    <ClCompile Include="..\..\src\algebra\*\*.cc">
+      <Filter>Source Files\algebra\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\algebra\*.h">
+      <Filter>Header Files\algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h">
+      <Filter>Header Files\algebra\finite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\algebra\finite\Group.h">
+      <Filter>Header Files\algebra\finite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h">
+      <Filter>Header Files\algebra\finite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Factorizer.h" />
+    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h" />
+    <ClInclude Include="..\..\src\algebra\Polynomial.h" />
+    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Factorizer.h" />
+    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h" />
+    <ClInclude Include="..\..\src\algebra\Polynomial.h" />
+    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Factorizer.h" />
+    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h" />
+    <ClInclude Include="..\..\src\algebra\Polynomial.h" />
+    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Factorizer.h" />
+    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h" />
+    <ClInclude Include="..\..\src\algebra\Polynomial.h" />
+    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Factorizer.h" />
+    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h" />
+    <ClInclude Include="..\..\src\algebra\Polynomial.h" />
+    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Factorizer.h" />
+    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h" />
+    <ClInclude Include="..\..\src\algebra\Polynomial.h" />
+    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
+    <ClInclude Include="..\..\src\algebra\common\combinatorics.h">
+      <Filter>Header Files\algebra\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
     <ClInclude Include="..\..\src\algebra\Algebra.h">
       <Filter>Header Files\algebra</Filter>
     </ClInclude>
-    <ClInclude Include="Tests\catch.hpp">
+    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Factorizer.h" />
+    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h" />
+    <ClInclude Include="..\..\src\algebra\Polynomial.h" />
+    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Algebra.h">
       <Filter>Header Files\algebra</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h">
+    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Factorizer.h" />
+    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h" />
+    <ClInclude Include="..\..\src\algebra\Polynomial.h" />
+    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
+    <ClInclude Include="..\..\src\algebra\common\combinatorics.h">
       <Filter>Header Files\algebra</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\algebra\Factorizer.h">
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
+    <ClInclude Include="..\..\src\algebra\Algebra.h">
       <Filter>Header Files\algebra</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h">
+    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Factorizer.h" />
+    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h" />
+    <ClInclude Include="..\..\src\algebra\Polynomial.h" />
+    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
+    <ClInclude Include="..\..\src\algebra\Algebra.h">
       <Filter>Header Files\algebra</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\algebra\Polynomial.h">
+    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Factorizer.h" />
+    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h" />
+    <ClInclude Include="..\..\src\algebra\Polynomial.h" />
+    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Algebra.h">
       <Filter>Header Files\algebra</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h">
+    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Factorizer.h" />
+    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h" />
+    <ClInclude Include="..\..\src\algebra\Polynomial.h" />
+    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Algebra.h">
       <Filter>Header Files\algebra</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h">
-      <Filter>Header Files\algebra</Filter>
+    <ClInclude Include="..\..\src\algebra\ConsecutivePolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\Factorizer.h" />
+    <ClInclude Include="..\..\src\algebra\GaloisFieldExtension.h" />
+    <ClInclude Include="..\..\src\algebra\Polynomial.h" />
+    <ClInclude Include="..\..\src\algebra\PolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\RandomPolynomialGenerator.h" />
+    <ClInclude Include="..\..\src\algebra\common\combinatorics.h">
+      <Filter>Header Files\algebra\finite</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\algebra\utils\utils.h">
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
+    <ClInclude Include="..\..\src\algebra\common\combinatorics.h">
       <Filter>Header Files\algebra\utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
     <ClInclude Include="..\..\src\algebra\common\combinatorics.h">
-      <Filter>Header Files\common</Filter>
+      <Filter>Header Files\algebra\finite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
+    <ClInclude Include="..\..\src\algebra\common\combinatorics.h">
+      <Filter>Header Files\algebra\finite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\algebra\finite\Field.h" />
+    <ClInclude Include="..\..\src\algebra\finite\FiniteAlgebraError.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Group.h" />
+    <ClInclude Include="..\..\src\algebra\finite\Ring.h" />
+    <ClInclude Include="..\..\src\algebra\utils\utils.h" />
+    <ClInclude Include="..\..\src\algebra\*\*\*.h">
+      <Filter>Header Files\algebra\finite\impl</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
