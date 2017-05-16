@@ -9,14 +9,21 @@
 #include <algebra/finite/Group.h>
 #include <algebra/finite/impl/IntGroup.h>
 
-TEST_CASE("Finite group is building",
+TEST_CASE("[+Test] Finite group is building",
 		  "[algebra][finite][group]") {
-	algebra::finite::impl::IntAdditiveGroup<size_t> a(6);
+	constexpr size_t N = 64;
+	algebra::finite::impl::IntAdditiveGroup<size_t> abelGroup(N);
+	for (auto& elem : abelGroup)
+	{
+		auto elem = a[0];
+	}
+	
 
+    REQUIRE(== N);
 }
 
 
-TEST_CASE("Algebra polynomial division is working",
+TEST_CASE("[+Test] Algebra polynomial division is working",
           "[algebra][polynomial]")
 {
 	std::vector<size_t>
@@ -28,7 +35,7 @@ TEST_CASE("Algebra polynomial division is working",
 	REQUIRE(p1 / p2 == pres);
 }
 
-TEST_CASE("Polynomials are placed inside set correctly", "[algebra][polynomial][stl]")
+TEST_CASE("[+Test] Polynomials are placed inside set correctly", "[algebra][polynomial][stl]")
 {
 	const std::array<algebra::Polynomial<2>, 2> ps = {{
 		{{0, 0, 0, 0, 1, 1}}, {{1, 1, 0, 0, 0, 1, 0}}
@@ -41,7 +48,7 @@ TEST_CASE("Polynomials are placed inside set correctly", "[algebra][polynomial][
 	REQUIRE(sets.size() == ps.size());
 }
 
-TEST_CASE("Algebra Field building is working",
+TEST_CASE("[+Test] Algebra Field building is working",
           "[algebra][field]")
 {
 	constexpr size_t degree = 6;
@@ -65,3 +72,4 @@ TEST_CASE("[+Test] algebra::common::combinatorics::IndexPlacementsWithoutRepetit
         REQUIRE_THAT(res, Catch::Matchers::Equals(decltype(res)()));
     }
 }
+
