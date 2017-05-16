@@ -21,31 +21,31 @@ namespace algebra::finite {
     };
 
 
-    template <class GroupElementType>
+    template <typename, template <typename> class GroupElementType>
     class Group;
     class FGroupElementGenerator;
     class FGroupFactorGenerator;
 
-    template <class T, T Neutral, class Impl>
+    template <class T, T Neutral, template<typename> class Impl_>
     class FGroupElement {
     public:
-        static_assert(std::is_base_of<FGroupElement, Impl>::value,
-                      "Template parameter Impl must implement FGroupElement interface");
+        /*static_assert(std::is_base_of<FGroupElement, Impl<T>>::value,
+                      "Template parameter Impl must implement FGroupElement interface");*/
 
+        typedef Impl_<T> Impl;
         typedef T IntegralType;
         typedef std::unique_ptr<Impl> Ptr;
-        typedef Group<Impl> Group;
+        typedef Group<T, Impl_> Group;
         typedef const Group* GroupPtr;
 
         static constexpr IntegralType NeutralValue = Neutral;
 
         virtual ~FGroupElement() = default;
 
-        virtual operator IntegralType() const = 0;
+        // virtual operator IntegralType_() const = 0;
         //virtual operator FGroupElement(const T&) const = 0;
 
         // ARITHMETIC OPERATORS
-
 
         // primary operator, can be mapped into *
         virtual Ptr operator+(const Impl &) const = 0;
@@ -62,6 +62,8 @@ namespace algebra::finite {
 
         virtual Ptr inv() const = 0;
 
+/*
+*/
         // LOGICAL OPERATORS
         virtual bool operator<(const Impl &) const = 0;
 
@@ -101,12 +103,12 @@ namespace algebra::finite {
         virtual T operator*() const = 0;
 
         // Printing
-        friend std::ofstream &operator<<(std::ofstream &a, const Impl &b) {
+        friend std::ostream &operator<<(std::ostream &a, const Impl &b) {
             return b.print(a, b);
         }
 
 
-        virtual std::ofstream &print(std::ofstream &, const Group &) const = 0;
+        virtual std::ostream &print(std::ostream &, const Group &) const = 0;
 
         template<typename... Args>
         static Ptr make(Args&&... args) {
@@ -118,22 +120,36 @@ namespace algebra::finite {
 
 
     // Abel's Finite Group implementation
-    template <class GroupElementType>
+    template <typename IntegralType_, template <typename> class GroupElementType>
     class Group {
     public:
-		static_assert (std::is_base_of<
+        // typedefs for convenience
+        typedef GroupElementType<IntegralType_> ElemType;
+        typedef IntegralType_ IntegralType;
+        // constexpr for convenience
+        static constexpr IntegralType_ NeutralValue = ElemType::NeutralValue;
+        //////////////////
+        class ElementIterator {
+        public:
+            ElementIterator(typename ElemType::Ptr&& a) : element_(a) {}
+            ElementIterator operator ++() { return element_+element_.group().generator(); }
+            ElementIterator operator ++(int) { return element_+element_.group().generator(); }
+        private:
+            typename ElemType::Ptr element_;
+
+
+        };
+    public:
+		/*static_assert (std::is_base_of<
                                FGroupElement<
-                                       typename GroupElementType::IntegralType,
+                                       typename GroupElementType::IntegralType_,
                                        GroupElementType::NeutralValue,
                                        GroupElementType>,
                                GroupElementType>::value,
-			"GroupElementType must have FGroupElement as a subclass with same type traits");
-        typedef typename GroupElementType::IntegralType IntegralType;
-        // typedefs for convenience
-        typedef IntegralType IntType;
-        typedef GroupElementType ElemType;
-        // constexpr for convenience
-        static constexpr IntegralType NeutralValue = ElemType::NeutralValue;
+			"GroupElementType must have FGroupElement as a subclass with same type traits");*/
+
+
+
 
         /////////////////////////////
         virtual ~Group() = default;
@@ -147,10 +163,9 @@ namespace algebra::finite {
          * It can be modular arithmetics, fast power (if group supports it),
          * EC arithmetics and etc.
         */
-        virtual typename ElemType::Ptr operateInside(const IntegralType&) const = 0;
+        virtual typename ElemType::Ptr operateInside(const IntegralType_&) const = 0;
 
         virtual typename ElemType::Ptr inverse(const ElemType& ) const = 0;
-
         // ACCESS OPERATORS
         virtual typename ElemType::Ptr operator[](size_t index) const = 0;
         // T operator [] (size_t m_index) const
@@ -162,13 +177,26 @@ namespace algebra::finite {
         virtual bool check() const noexcept(false) = 0;
         virtual FFGroupProperties properties() const = 0;
 
+        virtual void pregenerate() const = 0;
+
+        virtual typename ElemType::Ptr zeroElem() const = 0;
+        virtual typename ElemType::Ptr maxElem() const = 0;
+        virtual typename ElemType::Ptr minGenerator() const = 0;
         // PRINT OPERATORS AND METHODS
-        friend std::ofstream& operator << (std::ofstream &a, const Group &b) {
+
+
+        friend std::ostream& operator << (std::ostream &a, const Group &b) {
             return b.print(a, b);
         };
+        virtual std::ostream& print(std::ostream&, const Group& ) const = 0;
 
-        virtual std::ofstream& print(std::ofstream&, const Group& ) const = 0;
+        virtual ElementIterator begin() const {
+            return ElementIterator(zeroElem());
+        }
 
+        virtual ElementIterator end() const {
+            return ElementIterator(maxElem());
+        }
     };
 
 
